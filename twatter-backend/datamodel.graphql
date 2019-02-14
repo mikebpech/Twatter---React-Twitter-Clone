@@ -1,0 +1,32 @@
+enum Permission {
+  ADMIN
+  USER
+}
+
+type User {
+  id: ID! @unique
+  name: String!
+  handle: String! @unique
+  email: String! @unique
+  displayImg: String
+  verified: Boolean!
+  bio: String
+  password: String!
+  permissions: [Permission]
+  tweets: [Tweet!]! @relation(name: "TweetOfUser")
+}
+
+type Tweet {
+  id: ID! @unique
+  message: String!
+  image: String
+  largeImage: String
+  user: User! @relation(name: "TweetOfUser")
+  updatedAt: DateTime!
+}
+
+type Hashtag {
+  id: ID! @unique
+  word: String!
+  tweets: [Tweet]!
+}
