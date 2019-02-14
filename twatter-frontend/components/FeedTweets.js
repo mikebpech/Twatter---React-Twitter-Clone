@@ -58,6 +58,19 @@ const TweetActions = styled.div`
 const Feed = styled.div`
   max-height: calc(100vh - 170px);
   overflow-y: auto;
+
+  &::-webkit-scrollbar-track {
+    background-color: ${props => props.theme.lightgrey3};
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+    background-color: ${props => props.theme.lightgrey3};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${props => props.theme.blue};
+  }
 `;
 
 const FeedTweets = () => (

@@ -16,8 +16,8 @@ const CreateTweetSticky = styled.div`
   justify-content: center;
   color: white;
   font-size: 22px;
-  right: 0;
-  bottom: 0;
+  right: 10px;
+  bottom: 10px;
   cursor: pointer;
   transition: all 0.2s;
 
@@ -34,6 +34,7 @@ const HomeContainer = styled.div`
   position: relative;
   display: grid;
   grid-template-columns: 600px 380px;
+  grid-template-rows: 300px 300px;
   grid-gap: 20px;
 `;
 
@@ -41,6 +42,7 @@ const Feed = styled.div`
   background: ${props => props.theme.white};
   display: grid;
   grid-template-rows: auto 1fr;
+  grid-row: span 2;
 
   .header {
     cursor: pointer;

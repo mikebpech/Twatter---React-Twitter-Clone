@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { Icon, Input, Avatar, Badge } from "antd";
+import { Icon, Input, Avatar, Badge, Button } from "antd";
 import User from "./User";
 import UserDropdown from "./UserDropdown";
 import { CURRENT_USER_QUERY } from "./User";
@@ -24,7 +24,7 @@ const HeaderInside = styled.div`
   height: 100%;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 90px 90px 90px 90px 1fr auto;
+  grid-template-columns: 90px 90px 90px 90px 1fr auto auto;
   grid-gap: 10px;
   align-items: center;
 `;
@@ -76,7 +76,13 @@ const Header = () => (
                     <Badge dot>
                       <Avatar shape="square" src={me.displayImg} />
                     </Badge>
-                    <Icon type="user" onClick={() => signout()} />
+                    <Button
+                      style={{ marginLeft: "1rem" }}
+                      type="dashed"
+                      onClick={() => signout()}
+                    >
+                      Logout
+                    </Button>
                   </>
                 )}
               </Mutation>

@@ -38,7 +38,7 @@ const TweetContainer = styled.div`
 class CreateTweet extends Component {
   state = { message: "" };
 
-  handleCreateTweet = async (e, createTweet, createHashtag) => {
+  handleCreateTweet = async (e, createTweet) => {
     e.preventDefault();
     if (this.state.message.length > 150) {
       return message.error("Tweets cannot be longer than 150 chars.");
@@ -102,9 +102,7 @@ class CreateTweet extends Component {
                   </p>
                   <Button
                     type="primary"
-                    onClick={e =>
-                      this.handleCreateTweet(e, createTweet, createHashtag)
-                    }
+                    onClick={e => this.handleCreateTweet(e, createTweet)}
                     style={{ justifySelf: "end" }}
                   >
                     Tweet

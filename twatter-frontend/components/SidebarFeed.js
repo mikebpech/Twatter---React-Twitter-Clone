@@ -29,6 +29,24 @@ const Sidebar = styled.div`
     }
   }
 
+  .hashtag {
+    cursor: pointer;
+    padding: 1rem;
+    border-bottom: 1px solid ${props => props.theme.lightgrey2};
+    transition: all 0.2s;
+    &:hover {
+      background-color: ${props => props.theme.lightgrey3};
+    }
+
+    h3 {
+      font-weight: 700;
+    }
+
+    p {
+      color: ${props => props.theme.darkgrey};
+    }
+  }
+
   .suggestions {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
@@ -65,37 +83,52 @@ const Sidebar = styled.div`
 `;
 
 const SidebarFeed = () => (
-  <Query query={RANDOM_USERS_QUERY}>
-    {({ data, error, loading }) => {
-      return (
-        <Sidebar>
-          <div className="header">
-            <h2 onClick={() => console.log(this.props)}>
-              Who to follow
-              <Icon
-                style={{ color: "#1DA1F2", marginLeft: ".5rem" }}
-                type="twitter"
-              />
-            </h2>
-          </div>
-          <div className="suggestions">
-            {data.users &&
-              data.users.map(user => (
-                <div key={user.id} className="item">
-                  <Avatar size="large" src={user.displayImg} />
-                  <div className="item-user">
-                    <h3>{user.name}</h3>
-                    <h4>@{user.handle}</h4>
+  <>
+    <Query query={RANDOM_USERS_QUERY}>
+      {({ data, error, loading }) => {
+        return (
+          <Sidebar>
+            <div className="header">
+              <h2>
+                Who to follow
+                <Icon
+                  style={{ color: "#1DA1F2", marginLeft: ".5rem" }}
+                  type="twitter"
+                />
+              </h2>
+            </div>
+            <div className="suggestions">
+              {data.users &&
+                data.users.map(user => (
+                  <div key={user.id} className="item">
+                    <Avatar size="large" src={user.displayImg} />
+                    <div className="item-user">
+                      <h3>{user.name}</h3>
+                      <h4>@{user.handle}</h4>
+                    </div>
+                    <Button type="primary">Follow</Button>
                   </div>
-                  <Button type="primary">Follow</Button>
-                </div>
-              ))}
-            <div className="item" />
-          </div>
-        </Sidebar>
-      );
-    }}
-  </Query>
+                ))}
+            </div>
+          </Sidebar>
+        );
+      }}
+    </Query>
+    <Sidebar>
+      <div className="header">
+        <h2>
+          Worldwide trends
+          <Icon style={{ marginLeft: ".5rem" }} type="global" />
+        </h2>
+      </div>
+      <div className="hashtags">
+        <div className="hashtag">
+          <h3>#twatter</h3>
+          <p>33.5k Tweets</p>
+        </div>
+      </div>
+    </Sidebar>
+  </>
 );
 
 export default SidebarFeed;
