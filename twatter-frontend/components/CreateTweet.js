@@ -24,23 +24,30 @@ const TweetContainer = styled.div`
 
   .footer {
     display: grid;
-    grid-template-columns: 50px 50px 50px 1fr;
+    grid-template-columns: 50px 50px 50px 130px 1fr;
     grid-gap: 10px;
     align-items: center;
     margin-top: 2.5rem;
+
+    p {
+      justify-self: center;
+    }
   }
 `;
 
 class CreateTweet extends Component {
   state = { message: "" };
 
-  handleCreateTweet = async (e, createTweet) => {
+  handleCreateTweet = async (e, createTweet, createHashtag) => {
     e.preventDefault();
-    this.setState({ message: "" });
+    if (this.state.message.length > 150) {
+      return message.error("Tweets cannot be longer than 150 chars.");
+    }
     this.props.toggleCreateTweet();
     const res = await createTweet().catch(err =>
       message.error("Something went wrong!")
     );
+    this.setState({ message: "" });
     message.success("Tweeted successfully!");
   };
 
@@ -63,7 +70,10 @@ class CreateTweet extends Component {
                   value={this.state.message}
                   onChange={e => this.setState({ message: e.target.value })}
                   placeholder="What's happening?"
-                  style={{ fontSize: 20, borderBottom: "2px solid #1DA1F2" }}
+                  style={{
+                    fontSize: 20,
+                    borderBottom: "2px solid #1DA1F2"
+                  }}
                   rows={4}
                   autosize={{ minRows: 4, maxRows: 6 }}
                 />
@@ -80,9 +90,21 @@ class CreateTweet extends Component {
                     style={{ fontSize: 24, color: "#1DA1F2" }}
                     type="bar-chart"
                   />
+                  <p
+                    style={{
+                      color:
+                        this.state.message.length > 150
+                          ? "firebrick"
+                          : "#6b6b6b"
+                    }}
+                  >
+                    {this.state.message.length} / 150 chars.
+                  </p>
                   <Button
                     type="primary"
-                    onClick={e => this.handleCreateTweet(e, createTweet)}
+                    onClick={e =>
+                      this.handleCreateTweet(e, createTweet, createHashtag)
+                    }
                     style={{ justifySelf: "end" }}
                   >
                     Tweet

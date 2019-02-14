@@ -3,8 +3,35 @@ import styled from "styled-components";
 import { Avatar, Input, Icon, Modal } from "antd";
 import CreateTweet from "../components/CreateTweet";
 import FeedTweets from "../components/FeedTweets";
+import SidebarFeed from "../components/SidebarFeed";
+
+const CreateTweetSticky = styled.div`
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: ${props => props.theme.blue};
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    transform: translateY(-2px) rotate(180deg);
+  }
+
+  &:active {
+    transform: translateY(1px) rotate(180deg);
+  }
+`;
 
 const HomeContainer = styled.div`
+  position: relative;
   display: grid;
   grid-template-columns: 600px 380px;
   grid-gap: 20px;
@@ -23,22 +50,6 @@ const Feed = styled.div`
     padding: 2rem;
     align-items: center;
     border-bottom: 1px solid ${props => props.theme.lightgrey2};
-  }
-`;
-
-const Sidebar = styled.div`
-  background: ${props => props.theme.white};
-  display: grid;
-  height: 300px;
-  grid-template-rows: auto 1fr;
-  .header {
-    border-bottom: 1px solid ${props => props.theme.lightgrey2};
-    h2 {
-      margin: 0;
-      padding: 1.3rem;
-      font-weight: 700;
-      font-size: 20px;
-    }
   }
 `;
 
@@ -61,6 +72,7 @@ class Home extends Component {
     return (
       <HomeContainer>
         <Modal
+          footer={false}
           visible={createTweetVisible}
           title={
             <Icon type="twitter" style={{ color: "#1DA1F2", fontSize: 24 }} />
@@ -92,17 +104,10 @@ class Home extends Component {
           )}
           <FeedTweets />
         </Feed>
-        <Sidebar>
-          <div className="header">
-            <h2 onClick={() => console.log(this.props)}>
-              Who to follow
-              <Icon
-                style={{ color: "#1DA1F2", marginLeft: ".5rem" }}
-                type="twitter"
-              />
-            </h2>
-          </div>
-        </Sidebar>
+        <SidebarFeed />
+        <CreateTweetSticky onClick={() => this.toggleCreateTweet()}>
+          <Icon type="plus" />
+        </CreateTweetSticky>
       </HomeContainer>
     );
   }

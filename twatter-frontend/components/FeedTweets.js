@@ -56,7 +56,7 @@ const TweetActions = styled.div`
 `;
 
 const Feed = styled.div`
-  max-height: calc(100vh - 160px);
+  max-height: calc(100vh - 170px);
   overflow-y: auto;
 `;
 

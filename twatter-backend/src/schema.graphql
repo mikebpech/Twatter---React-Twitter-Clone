@@ -19,6 +19,12 @@ type SuccessMessage {
 
 type Query {
   user(where: UserWhereUniqueInput!): User
+  users(
+    where: UserWhereInput
+    orderBy: UserOrderByInput
+    skip: Int
+    first: Int
+  ): [User]!
   me: User
   tweets(
     where: TweetWhereInput
@@ -46,4 +52,5 @@ type Mutation {
     bio: String
   ): User!
   createTweet(message: String!, largeImage: String): Tweet!
+  createHashtag(word: String!): Hashtag!
 }

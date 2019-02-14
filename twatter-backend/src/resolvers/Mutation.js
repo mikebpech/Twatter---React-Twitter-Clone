@@ -93,6 +93,25 @@ const Mutations = {
       info
     );
     return tweet;
+  },
+  async createHashtag(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in");
+    }
+    const hashtag = await ctx.db.mutation.createHashtag(
+      {
+        data: {
+          tweet: {
+            connect: {
+              id: args.tweetId
+            }
+          },
+          ...args
+        }
+      },
+      info
+    );
+    return hashtag;
   }
 };
 

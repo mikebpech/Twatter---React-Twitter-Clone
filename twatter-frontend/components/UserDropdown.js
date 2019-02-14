@@ -325,9 +325,6 @@ class RegisterForm extends Component {
               <Button loading={loading} block type="primary" htmlType="submit">
                 Register
               </Button>
-              <button type="button" onClick={() => console.log(this.props)}>
-                state
-              </button>
             </Form.Item>
           </Form>
         )}
