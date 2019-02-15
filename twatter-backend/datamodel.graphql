@@ -9,6 +9,9 @@ type User {
   handle: String! @unique
   email: String! @unique
   displayImg: String
+  coverImg: String
+  followers: [String!]
+  following: [String!]
   verified: Boolean!
   bio: String
   password: String!

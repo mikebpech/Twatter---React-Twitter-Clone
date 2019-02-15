@@ -11,9 +11,14 @@ const CURRENT_USER_QUERY = gql`
       permissions
       displayImg
       handle
+      followers
+      following
+      coverImg
       tweets {
         id
         message
+        createdAt
+        image
       }
     }
   }

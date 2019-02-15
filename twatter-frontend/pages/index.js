@@ -115,4 +115,5 @@ class Home extends Component {
   }
 }
 
+export { HomeContainer };
 export default Home;

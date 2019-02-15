@@ -48,7 +48,7 @@ const Option = styled.div`
 
 class UserOptionsDropdown extends Component {
   state = {
-    drawerOpen: true
+    drawerOpen: false
   };
 
   toggleDrawer = () => {
