@@ -104,7 +104,7 @@ class Home extends Component {
               />
             </div>
           )}
-          <FeedTweets />
+          <FeedTweets currentUser={this.props.me} />
         </Feed>
         <SidebarFeed />
         <CreateTweetSticky onClick={() => this.toggleCreateTweet()}>

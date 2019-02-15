@@ -51,6 +51,6 @@ type Mutation {
     displayImg: String
     bio: String
   ): User!
-  createTweet(message: String!, largeImage: String): Tweet!
-  createHashtag(word: String!): Hashtag!
+  createTweet(message: String!, largeImage: String, hashtags: [String!]): Tweet!
+  deleteTweet(id: ID!): Tweet!
 }

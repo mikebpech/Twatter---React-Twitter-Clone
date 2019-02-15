@@ -1,9 +1,5 @@
 # source: https://us1.prisma.sh/michael-pechousek-bd4011/twatter-backend/dev
-# timestamp: Wed Feb 13 2019 16:31:35 GMT-0500 (GMT-05:00)
-
-type AggregateHashtag {
-  count: Int!
-}
+# timestamp: Thu Feb 14 2019 16:42:41 GMT-0500 (GMT-05:00)
 
 type AggregateTweet {
   count: Int!
@@ -20,198 +16,6 @@ type BatchPayload {
 
 scalar DateTime
 
-type Hashtag implements Node {
-  id: ID!
-  word: String!
-  tweets(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tweet!]
-}
-
-"""A connection to a list of items."""
-type HashtagConnection {
-  """Information to aid in pagination."""
-  pageInfo: PageInfo!
-
-  """A list of edges."""
-  edges: [HashtagEdge]!
-  aggregate: AggregateHashtag!
-}
-
-input HashtagCreateInput {
-  word: String!
-  tweets: TweetCreateManyInput
-}
-
-"""An edge in a connection."""
-type HashtagEdge {
-  """The item at the end of the edge."""
-  node: Hashtag!
-
-  """A cursor for use in pagination."""
-  cursor: String!
-}
-
-enum HashtagOrderByInput {
-  id_ASC
-  id_DESC
-  word_ASC
-  word_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
-}
-
-type HashtagPreviousValues {
-  id: ID!
-  word: String!
-}
-
-type HashtagSubscriptionPayload {
-  mutation: MutationType!
-  node: Hashtag
-  updatedFields: [String!]
-  previousValues: HashtagPreviousValues
-}
-
-input HashtagSubscriptionWhereInput {
-  """Logical AND on all given filters."""
-  AND: [HashtagSubscriptionWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [HashtagSubscriptionWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [HashtagSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: HashtagWhereInput
-}
-
-input HashtagUpdateInput {
-  word: String
-  tweets: TweetUpdateManyInput
-}
-
-input HashtagUpdateManyMutationInput {
-  word: String
-}
-
-input HashtagWhereInput {
-  """Logical AND on all given filters."""
-  AND: [HashtagWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [HashtagWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [HashtagWhereInput!]
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
-  word: String
-
-  """All values that are not equal to given value."""
-  word_not: String
-
-  """All values that are contained in given list."""
-  word_in: [String!]
-
-  """All values that are not contained in given list."""
-  word_not_in: [String!]
-
-  """All values less than the given value."""
-  word_lt: String
-
-  """All values less than or equal the given value."""
-  word_lte: String
-
-  """All values greater than the given value."""
-  word_gt: String
-
-  """All values greater than or equal the given value."""
-  word_gte: String
-
-  """All values containing the given string."""
-  word_contains: String
-
-  """All values not containing the given string."""
-  word_not_contains: String
-
-  """All values starting with the given string."""
-  word_starts_with: String
-
-  """All values not starting with the given string."""
-  word_not_starts_with: String
-
-  """All values ending with the given string."""
-  word_ends_with: String
-
-  """All values not ending with the given string."""
-  word_not_ends_with: String
-  tweets_every: TweetWhereInput
-  tweets_some: TweetWhereInput
-  tweets_none: TweetWhereInput
-}
-
-input HashtagWhereUniqueInput {
-  id: ID
-}
-
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -220,22 +24,16 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
-  createHashtag(data: HashtagCreateInput!): Hashtag!
   createTweet(data: TweetCreateInput!): Tweet!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateHashtag(data: HashtagUpdateInput!, where: HashtagWhereUniqueInput!): Hashtag
   updateTweet(data: TweetUpdateInput!, where: TweetWhereUniqueInput!): Tweet
   deleteUser(where: UserWhereUniqueInput!): User
-  deleteHashtag(where: HashtagWhereUniqueInput!): Hashtag
   deleteTweet(where: TweetWhereUniqueInput!): Tweet
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertHashtag(where: HashtagWhereUniqueInput!, create: HashtagCreateInput!, update: HashtagUpdateInput!): Hashtag!
   upsertTweet(where: TweetWhereUniqueInput!, create: TweetCreateInput!, update: TweetUpdateInput!): Tweet!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  updateManyHashtags(data: HashtagUpdateManyMutationInput!, where: HashtagWhereInput): BatchPayload!
   updateManyTweets(data: TweetUpdateManyMutationInput!, where: TweetWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyHashtags(where: HashtagWhereInput): BatchPayload!
   deleteManyTweets(where: TweetWhereInput): BatchPayload!
 }
 
@@ -273,13 +71,10 @@ enum Permission {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  hashtags(where: HashtagWhereInput, orderBy: HashtagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Hashtag]!
   tweets(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tweet]!
   user(where: UserWhereUniqueInput!): User
-  hashtag(where: HashtagWhereUniqueInput!): Hashtag
   tweet(where: TweetWhereUniqueInput!): Tweet
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  hashtagsConnection(where: HashtagWhereInput, orderBy: HashtagOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): HashtagConnection!
   tweetsConnection(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TweetConnection!
 
   """Fetches an object given its ID"""
@@ -291,7 +86,6 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  hashtag(where: HashtagSubscriptionWhereInput): HashtagSubscriptionPayload
   tweet(where: TweetSubscriptionWhereInput): TweetSubscriptionPayload
 }
 
@@ -301,7 +95,9 @@ type Tweet implements Node {
   image: String
   largeImage: String
   user: User!
+  hashtags: [String!]!
   updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -314,16 +110,16 @@ type TweetConnection {
   aggregate: AggregateTweet!
 }
 
+input TweetCreatehashtagsInput {
+  set: [String!]
+}
+
 input TweetCreateInput {
   message: String!
   image: String
   largeImage: String
+  hashtags: TweetCreatehashtagsInput
   user: UserCreateOneWithoutTweetsInput!
-}
-
-input TweetCreateManyInput {
-  create: [TweetCreateInput!]
-  connect: [TweetWhereUniqueInput!]
 }
 
 input TweetCreateManyWithoutUserInput {
@@ -335,6 +131,7 @@ input TweetCreateWithoutUserInput {
   message: String!
   image: String
   largeImage: String
+  hashtags: TweetCreatehashtagsInput
 }
 
 """An edge in a connection."""
@@ -366,7 +163,9 @@ type TweetPreviousValues {
   message: String!
   image: String
   largeImage: String
+  hashtags: [String!]!
   updatedAt: DateTime!
+  createdAt: DateTime!
 }
 
 input TweetScalarWhereInput {
@@ -560,6 +359,28 @@ input TweetScalarWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
 }
 
 type TweetSubscriptionPayload {
@@ -601,17 +422,15 @@ input TweetSubscriptionWhereInput {
   node: TweetWhereInput
 }
 
-input TweetUpdateDataInput {
-  message: String
-  image: String
-  largeImage: String
-  user: UserUpdateOneRequiredWithoutTweetsInput
+input TweetUpdatehashtagsInput {
+  set: [String!]
 }
 
 input TweetUpdateInput {
   message: String
   image: String
   largeImage: String
+  hashtags: TweetUpdatehashtagsInput
   user: UserUpdateOneRequiredWithoutTweetsInput
 }
 
@@ -619,24 +438,14 @@ input TweetUpdateManyDataInput {
   message: String
   image: String
   largeImage: String
-}
-
-input TweetUpdateManyInput {
-  create: [TweetCreateInput!]
-  connect: [TweetWhereUniqueInput!]
-  set: [TweetWhereUniqueInput!]
-  disconnect: [TweetWhereUniqueInput!]
-  delete: [TweetWhereUniqueInput!]
-  update: [TweetUpdateWithWhereUniqueNestedInput!]
-  updateMany: [TweetUpdateManyWithWhereNestedInput!]
-  deleteMany: [TweetScalarWhereInput!]
-  upsert: [TweetUpsertWithWhereUniqueNestedInput!]
+  hashtags: TweetUpdatehashtagsInput
 }
 
 input TweetUpdateManyMutationInput {
   message: String
   image: String
   largeImage: String
+  hashtags: TweetUpdatehashtagsInput
 }
 
 input TweetUpdateManyWithoutUserInput {
@@ -660,22 +469,12 @@ input TweetUpdateWithoutUserDataInput {
   message: String
   image: String
   largeImage: String
-}
-
-input TweetUpdateWithWhereUniqueNestedInput {
-  where: TweetWhereUniqueInput!
-  data: TweetUpdateDataInput!
+  hashtags: TweetUpdatehashtagsInput
 }
 
 input TweetUpdateWithWhereUniqueWithoutUserInput {
   where: TweetWhereUniqueInput!
   data: TweetUpdateWithoutUserDataInput!
-}
-
-input TweetUpsertWithWhereUniqueNestedInput {
-  where: TweetWhereUniqueInput!
-  update: TweetUpdateDataInput!
-  create: TweetCreateInput!
 }
 
 input TweetUpsertWithWhereUniqueWithoutUserInput {
@@ -875,6 +674,28 @@ input TweetWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
   user: UserWhereInput
 }
 

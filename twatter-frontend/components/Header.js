@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { Icon, Input, Avatar, Badge, Button } from "antd";
+import { Icon, Input, Button } from "antd";
 import User from "./User";
 import UserDropdown from "./UserDropdown";
+import UserOptionsDropdown from "./UserOptionsDropdown";
 import { CURRENT_USER_QUERY } from "./User";
 
 const SIGN_OUT_MUTATION = gql`
@@ -73,9 +74,7 @@ const Header = () => (
               >
                 {signout => (
                   <>
-                    <Badge dot>
-                      <Avatar shape="square" src={me.displayImg} />
-                    </Badge>
+                    <UserOptionsDropdown me={me} />
                     <Button
                       style={{ marginLeft: "1rem" }}
                       type="dashed"

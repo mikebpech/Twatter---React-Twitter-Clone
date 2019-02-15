@@ -22,11 +22,7 @@ type Tweet {
   image: String
   largeImage: String
   user: User! @relation(name: "TweetOfUser")
+  hashtags: [String!]
   updatedAt: DateTime!
-}
-
-type Hashtag {
-  id: ID! @unique
-  word: String!
-  tweets: [Tweet]!
+  createdAt: DateTime!
 }

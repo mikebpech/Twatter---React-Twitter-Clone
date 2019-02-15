@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { hasPermission } = require("../utils");
 
 const Mutations = {
   async signup(parent, args, ctx, info) {
@@ -7,9 +8,7 @@ const Mutations = {
 
     const password = await bcrypt.hash(args.password, 10);
 
-    const displayImg = `https://avatars.dicebear.com/v2/jdenticon/${
-      args.email
-    }.svg`;
+    const displayImg = `https://avatars.dicebear.com/v2/male/${args.email}.svg`;
 
     const handle = args.handle.toLowerCase();
 
@@ -79,6 +78,9 @@ const Mutations = {
     if (!ctx.request.userId) {
       throw new Error("You must be logged in!");
     }
+
+    let hashtags = args.message.match(/#[a-z0-9_]+/g);
+
     const tweet = await ctx.db.mutation.createTweet(
       {
         data: {
@@ -87,6 +89,9 @@ const Mutations = {
               id: ctx.request.userId
             }
           },
+          hashtags: {
+            set: hashtags
+          },
           ...args
         }
       },
@@ -94,24 +99,26 @@ const Mutations = {
     );
     return tweet;
   },
-  async createHashtag(parent, args, ctx, info) {
+  async deleteTweet(parent, args, ctx, info) {
     if (!ctx.request.userId) {
-      throw new Error("You must be logged in");
+      throw new Error("You must be logged in!");
     }
-    const hashtag = await ctx.db.mutation.createHashtag(
-      {
-        data: {
-          tweet: {
-            connect: {
-              id: args.tweetId
-            }
-          },
-          ...args
-        }
-      },
-      info
+
+    const where = { id: args.id };
+    const tweet = await ctx.db.query.tweet(
+      { where },
+      `{ id, message, user { id } }`
     );
-    return hashtag;
+    const ownsTweet = tweet.user.id === ctx.request.userId;
+    const hasPermissions = ctx.request.user.permissions.some(perm =>
+      ["ADMIN"].includes(perm)
+    );
+
+    if (!ownsTweet && !hasPermissions) {
+      throw new Error("You don't have permission to do that.");
+    }
+
+    return ctx.db.mutation.deleteTweet({ where }, info);
   }
 };
 
