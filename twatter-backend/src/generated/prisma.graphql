@@ -1,5 +1,9 @@
-# source: https://us1.prisma.sh/michael-pechousek-bd4011/twatter-backend/dev
-# timestamp: Fri Feb 15 2019 10:49:09 GMT-0500 (GMT-05:00)
+# source: https://twatter-backend-e940444166.herokuapp.com/twatter-backend/prod
+# timestamp: Mon Feb 18 2019 12:45:28 GMT-0500 (GMT-05:00)
+
+type AggregateComment {
+  count: Int!
+}
 
 type AggregateTweet {
   count: Int!
@@ -14,6 +18,650 @@ type BatchPayload {
   count: Long!
 }
 
+type Comment implements Node {
+  id: ID!
+  message: String!
+  tweet: Tweet!
+  user: User!
+  image: String
+  largeImage: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type CommentConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CommentEdge]!
+  aggregate: AggregateComment!
+}
+
+input CommentCreateInput {
+  message: String!
+  image: String
+  largeImage: String
+  tweet: TweetCreateOneWithoutCommentsInput!
+  user: UserCreateOneWithoutCommentsInput!
+}
+
+input CommentCreateManyWithoutTweetInput {
+  create: [CommentCreateWithoutTweetInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateManyWithoutUserInput {
+  create: [CommentCreateWithoutUserInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateWithoutTweetInput {
+  message: String!
+  image: String
+  largeImage: String
+  user: UserCreateOneWithoutCommentsInput!
+}
+
+input CommentCreateWithoutUserInput {
+  message: String!
+  image: String
+  largeImage: String
+  tweet: TweetCreateOneWithoutCommentsInput!
+}
+
+"""An edge in a connection."""
+type CommentEdge {
+  """The item at the end of the edge."""
+  node: Comment!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CommentOrderByInput {
+  id_ASC
+  id_DESC
+  message_ASC
+  message_DESC
+  image_ASC
+  image_DESC
+  largeImage_ASC
+  largeImage_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CommentPreviousValues {
+  id: ID!
+  message: String!
+  image: String
+  largeImage: String
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+input CommentScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  image: String
+
+  """All values that are not equal to given value."""
+  image_not: String
+
+  """All values that are contained in given list."""
+  image_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_not_in: [String!]
+
+  """All values less than the given value."""
+  image_lt: String
+
+  """All values less than or equal the given value."""
+  image_lte: String
+
+  """All values greater than the given value."""
+  image_gt: String
+
+  """All values greater than or equal the given value."""
+  image_gte: String
+
+  """All values containing the given string."""
+  image_contains: String
+
+  """All values not containing the given string."""
+  image_not_contains: String
+
+  """All values starting with the given string."""
+  image_starts_with: String
+
+  """All values not starting with the given string."""
+  image_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_ends_with: String
+
+  """All values not ending with the given string."""
+  image_not_ends_with: String
+  largeImage: String
+
+  """All values that are not equal to given value."""
+  largeImage_not: String
+
+  """All values that are contained in given list."""
+  largeImage_in: [String!]
+
+  """All values that are not contained in given list."""
+  largeImage_not_in: [String!]
+
+  """All values less than the given value."""
+  largeImage_lt: String
+
+  """All values less than or equal the given value."""
+  largeImage_lte: String
+
+  """All values greater than the given value."""
+  largeImage_gt: String
+
+  """All values greater than or equal the given value."""
+  largeImage_gte: String
+
+  """All values containing the given string."""
+  largeImage_contains: String
+
+  """All values not containing the given string."""
+  largeImage_not_contains: String
+
+  """All values starting with the given string."""
+  largeImage_starts_with: String
+
+  """All values not starting with the given string."""
+  largeImage_not_starts_with: String
+
+  """All values ending with the given string."""
+  largeImage_ends_with: String
+
+  """All values not ending with the given string."""
+  largeImage_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+}
+
+type CommentSubscriptionPayload {
+  mutation: MutationType!
+  node: Comment
+  updatedFields: [String!]
+  previousValues: CommentPreviousValues
+}
+
+input CommentSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CommentWhereInput
+}
+
+input CommentUpdateInput {
+  message: String
+  image: String
+  largeImage: String
+  tweet: TweetUpdateOneRequiredWithoutCommentsInput
+  user: UserUpdateOneRequiredWithoutCommentsInput
+}
+
+input CommentUpdateManyDataInput {
+  message: String
+  image: String
+  largeImage: String
+}
+
+input CommentUpdateManyMutationInput {
+  message: String
+  image: String
+  largeImage: String
+}
+
+input CommentUpdateManyWithoutTweetInput {
+  create: [CommentCreateWithoutTweetInput!]
+  connect: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  delete: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutTweetInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutTweetInput!]
+}
+
+input CommentUpdateManyWithoutUserInput {
+  create: [CommentCreateWithoutUserInput!]
+  connect: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  delete: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput!
+  data: CommentUpdateManyDataInput!
+}
+
+input CommentUpdateWithoutTweetDataInput {
+  message: String
+  image: String
+  largeImage: String
+  user: UserUpdateOneRequiredWithoutCommentsInput
+}
+
+input CommentUpdateWithoutUserDataInput {
+  message: String
+  image: String
+  largeImage: String
+  tweet: TweetUpdateOneRequiredWithoutCommentsInput
+}
+
+input CommentUpdateWithWhereUniqueWithoutTweetInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutTweetDataInput!
+}
+
+input CommentUpdateWithWhereUniqueWithoutUserInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutUserDataInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutTweetInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutTweetDataInput!
+  create: CommentCreateWithoutTweetInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutUserInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutUserDataInput!
+  create: CommentCreateWithoutUserInput!
+}
+
+input CommentWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CommentWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CommentWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CommentWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  message: String
+
+  """All values that are not equal to given value."""
+  message_not: String
+
+  """All values that are contained in given list."""
+  message_in: [String!]
+
+  """All values that are not contained in given list."""
+  message_not_in: [String!]
+
+  """All values less than the given value."""
+  message_lt: String
+
+  """All values less than or equal the given value."""
+  message_lte: String
+
+  """All values greater than the given value."""
+  message_gt: String
+
+  """All values greater than or equal the given value."""
+  message_gte: String
+
+  """All values containing the given string."""
+  message_contains: String
+
+  """All values not containing the given string."""
+  message_not_contains: String
+
+  """All values starting with the given string."""
+  message_starts_with: String
+
+  """All values not starting with the given string."""
+  message_not_starts_with: String
+
+  """All values ending with the given string."""
+  message_ends_with: String
+
+  """All values not ending with the given string."""
+  message_not_ends_with: String
+  image: String
+
+  """All values that are not equal to given value."""
+  image_not: String
+
+  """All values that are contained in given list."""
+  image_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_not_in: [String!]
+
+  """All values less than the given value."""
+  image_lt: String
+
+  """All values less than or equal the given value."""
+  image_lte: String
+
+  """All values greater than the given value."""
+  image_gt: String
+
+  """All values greater than or equal the given value."""
+  image_gte: String
+
+  """All values containing the given string."""
+  image_contains: String
+
+  """All values not containing the given string."""
+  image_not_contains: String
+
+  """All values starting with the given string."""
+  image_starts_with: String
+
+  """All values not starting with the given string."""
+  image_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_ends_with: String
+
+  """All values not ending with the given string."""
+  image_not_ends_with: String
+  largeImage: String
+
+  """All values that are not equal to given value."""
+  largeImage_not: String
+
+  """All values that are contained in given list."""
+  largeImage_in: [String!]
+
+  """All values that are not contained in given list."""
+  largeImage_not_in: [String!]
+
+  """All values less than the given value."""
+  largeImage_lt: String
+
+  """All values less than or equal the given value."""
+  largeImage_lte: String
+
+  """All values greater than the given value."""
+  largeImage_gt: String
+
+  """All values greater than or equal the given value."""
+  largeImage_gte: String
+
+  """All values containing the given string."""
+  largeImage_contains: String
+
+  """All values not containing the given string."""
+  largeImage_not_contains: String
+
+  """All values starting with the given string."""
+  largeImage_starts_with: String
+
+  """All values not starting with the given string."""
+  largeImage_not_starts_with: String
+
+  """All values ending with the given string."""
+  largeImage_ends_with: String
+
+  """All values not ending with the given string."""
+  largeImage_not_ends_with: String
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  tweet: TweetWhereInput
+  user: UserWhereInput
+}
+
+input CommentWhereUniqueInput {
+  id: ID
+}
+
 scalar DateTime
 
 """
@@ -25,16 +673,22 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createTweet(data: TweetCreateInput!): Tweet!
+  createComment(data: CommentCreateInput!): Comment!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateTweet(data: TweetUpdateInput!, where: TweetWhereUniqueInput!): Tweet
+  updateComment(data: CommentUpdateInput!, where: CommentWhereUniqueInput!): Comment
   deleteUser(where: UserWhereUniqueInput!): User
   deleteTweet(where: TweetWhereUniqueInput!): Tweet
+  deleteComment(where: CommentWhereUniqueInput!): Comment
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertTweet(where: TweetWhereUniqueInput!, create: TweetCreateInput!, update: TweetUpdateInput!): Tweet!
+  upsertComment(where: CommentWhereUniqueInput!, create: CommentCreateInput!, update: CommentUpdateInput!): Comment!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyTweets(data: TweetUpdateManyMutationInput!, where: TweetWhereInput): BatchPayload!
+  updateManyComments(data: CommentUpdateManyMutationInput!, where: CommentWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyTweets(where: TweetWhereInput): BatchPayload!
+  deleteManyComments(where: CommentWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -72,10 +726,13 @@ enum Permission {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   tweets(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tweet]!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment]!
   user(where: UserWhereUniqueInput!): User
   tweet(where: TweetWhereUniqueInput!): Tweet
+  comment(where: CommentWhereUniqueInput!): Comment
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   tweetsConnection(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TweetConnection!
+  commentsConnection(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CommentConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -87,6 +744,7 @@ type Query {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   tweet(where: TweetSubscriptionWhereInput): TweetSubscriptionPayload
+  comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
 }
 
 type Tweet implements Node {
@@ -94,6 +752,7 @@ type Tweet implements Node {
   message: String!
   image: String
   largeImage: String
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   user: User!
   hashtags: [String!]!
   updatedAt: DateTime!
@@ -119,6 +778,7 @@ input TweetCreateInput {
   image: String
   largeImage: String
   hashtags: TweetCreatehashtagsInput
+  comments: CommentCreateManyWithoutTweetInput
   user: UserCreateOneWithoutTweetsInput!
 }
 
@@ -127,11 +787,25 @@ input TweetCreateManyWithoutUserInput {
   connect: [TweetWhereUniqueInput!]
 }
 
+input TweetCreateOneWithoutCommentsInput {
+  create: TweetCreateWithoutCommentsInput
+  connect: TweetWhereUniqueInput
+}
+
+input TweetCreateWithoutCommentsInput {
+  message: String!
+  image: String
+  largeImage: String
+  hashtags: TweetCreatehashtagsInput
+  user: UserCreateOneWithoutTweetsInput!
+}
+
 input TweetCreateWithoutUserInput {
   message: String!
   image: String
   largeImage: String
   hashtags: TweetCreatehashtagsInput
+  comments: CommentCreateManyWithoutTweetInput
 }
 
 """An edge in a connection."""
@@ -431,6 +1105,7 @@ input TweetUpdateInput {
   image: String
   largeImage: String
   hashtags: TweetUpdatehashtagsInput
+  comments: CommentUpdateManyWithoutTweetInput
   user: UserUpdateOneRequiredWithoutTweetsInput
 }
 
@@ -451,7 +1126,6 @@ input TweetUpdateManyMutationInput {
 input TweetUpdateManyWithoutUserInput {
   create: [TweetCreateWithoutUserInput!]
   connect: [TweetWhereUniqueInput!]
-  set: [TweetWhereUniqueInput!]
   disconnect: [TweetWhereUniqueInput!]
   delete: [TweetWhereUniqueInput!]
   update: [TweetUpdateWithWhereUniqueWithoutUserInput!]
@@ -465,16 +1139,37 @@ input TweetUpdateManyWithWhereNestedInput {
   data: TweetUpdateManyDataInput!
 }
 
+input TweetUpdateOneRequiredWithoutCommentsInput {
+  create: TweetCreateWithoutCommentsInput
+  connect: TweetWhereUniqueInput
+  update: TweetUpdateWithoutCommentsDataInput
+  upsert: TweetUpsertWithoutCommentsInput
+}
+
+input TweetUpdateWithoutCommentsDataInput {
+  message: String
+  image: String
+  largeImage: String
+  hashtags: TweetUpdatehashtagsInput
+  user: UserUpdateOneRequiredWithoutTweetsInput
+}
+
 input TweetUpdateWithoutUserDataInput {
   message: String
   image: String
   largeImage: String
   hashtags: TweetUpdatehashtagsInput
+  comments: CommentUpdateManyWithoutTweetInput
 }
 
 input TweetUpdateWithWhereUniqueWithoutUserInput {
   where: TweetWhereUniqueInput!
   data: TweetUpdateWithoutUserDataInput!
+}
+
+input TweetUpsertWithoutCommentsInput {
+  update: TweetUpdateWithoutCommentsDataInput!
+  create: TweetCreateWithoutCommentsInput!
 }
 
 input TweetUpsertWithWhereUniqueWithoutUserInput {
@@ -696,6 +1391,9 @@ input TweetWhereInput {
 
   """All values greater than or equal the given value."""
   createdAt_gte: DateTime
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
   user: UserWhereInput
 }
 
@@ -709,13 +1407,16 @@ type User implements Node {
   handle: String!
   email: String!
   displayImg: String
+  createdAt: DateTime!
   coverImg: String
-  followers: [String!]!
-  following: [String!]!
+  followers: [ID!]!
+  following: [ID!]!
+  likes: [ID!]!
   verified: Boolean!
   bio: String
   password: String!
   permissions: [Permission!]!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
   tweets(where: TweetWhereInput, orderBy: TweetOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tweet!]
 }
 
@@ -730,11 +1431,11 @@ type UserConnection {
 }
 
 input UserCreatefollowersInput {
-  set: [String!]
+  set: [ID!]
 }
 
 input UserCreatefollowingInput {
-  set: [String!]
+  set: [ID!]
 }
 
 input UserCreateInput {
@@ -748,8 +1449,19 @@ input UserCreateInput {
   password: String!
   followers: UserCreatefollowersInput
   following: UserCreatefollowingInput
+  likes: UserCreatelikesInput
   permissions: UserCreatepermissionsInput
+  comments: CommentCreateManyWithoutUserInput
   tweets: TweetCreateManyWithoutUserInput
+}
+
+input UserCreatelikesInput {
+  set: [ID!]
+}
+
+input UserCreateOneWithoutCommentsInput {
+  create: UserCreateWithoutCommentsInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutTweetsInput {
@@ -759,6 +1471,22 @@ input UserCreateOneWithoutTweetsInput {
 
 input UserCreatepermissionsInput {
   set: [Permission!]
+}
+
+input UserCreateWithoutCommentsInput {
+  name: String!
+  handle: String!
+  email: String!
+  displayImg: String
+  coverImg: String
+  verified: Boolean!
+  bio: String
+  password: String!
+  followers: UserCreatefollowersInput
+  following: UserCreatefollowingInput
+  likes: UserCreatelikesInput
+  permissions: UserCreatepermissionsInput
+  tweets: TweetCreateManyWithoutUserInput
 }
 
 input UserCreateWithoutTweetsInput {
@@ -772,7 +1500,9 @@ input UserCreateWithoutTweetsInput {
   password: String!
   followers: UserCreatefollowersInput
   following: UserCreatefollowingInput
+  likes: UserCreatelikesInput
   permissions: UserCreatepermissionsInput
+  comments: CommentCreateManyWithoutUserInput
 }
 
 """An edge in a connection."""
@@ -795,6 +1525,8 @@ enum UserOrderByInput {
   email_DESC
   displayImg_ASC
   displayImg_DESC
+  createdAt_ASC
+  createdAt_DESC
   coverImg_ASC
   coverImg_DESC
   verified_ASC
@@ -805,8 +1537,6 @@ enum UserOrderByInput {
   password_DESC
   updatedAt_ASC
   updatedAt_DESC
-  createdAt_ASC
-  createdAt_DESC
 }
 
 type UserPreviousValues {
@@ -815,9 +1545,11 @@ type UserPreviousValues {
   handle: String!
   email: String!
   displayImg: String
+  createdAt: DateTime!
   coverImg: String
-  followers: [String!]!
-  following: [String!]!
+  followers: [ID!]!
+  following: [ID!]!
+  likes: [ID!]!
   verified: Boolean!
   bio: String
   password: String!
@@ -864,11 +1596,11 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdatefollowersInput {
-  set: [String!]
+  set: [ID!]
 }
 
 input UserUpdatefollowingInput {
-  set: [String!]
+  set: [ID!]
 }
 
 input UserUpdateInput {
@@ -882,8 +1614,14 @@ input UserUpdateInput {
   password: String
   followers: UserUpdatefollowersInput
   following: UserUpdatefollowingInput
+  likes: UserUpdatelikesInput
   permissions: UserUpdatepermissionsInput
+  comments: CommentUpdateManyWithoutUserInput
   tweets: TweetUpdateManyWithoutUserInput
+}
+
+input UserUpdatelikesInput {
+  set: [ID!]
 }
 
 input UserUpdateManyMutationInput {
@@ -897,7 +1635,15 @@ input UserUpdateManyMutationInput {
   password: String
   followers: UserUpdatefollowersInput
   following: UserUpdatefollowingInput
+  likes: UserUpdatelikesInput
   permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateOneRequiredWithoutCommentsInput {
+  create: UserCreateWithoutCommentsInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutCommentsDataInput
+  upsert: UserUpsertWithoutCommentsInput
 }
 
 input UserUpdateOneRequiredWithoutTweetsInput {
@@ -911,6 +1657,22 @@ input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
+input UserUpdateWithoutCommentsDataInput {
+  name: String
+  handle: String
+  email: String
+  displayImg: String
+  coverImg: String
+  verified: Boolean
+  bio: String
+  password: String
+  followers: UserUpdatefollowersInput
+  following: UserUpdatefollowingInput
+  likes: UserUpdatelikesInput
+  permissions: UserUpdatepermissionsInput
+  tweets: TweetUpdateManyWithoutUserInput
+}
+
 input UserUpdateWithoutTweetsDataInput {
   name: String
   handle: String
@@ -922,7 +1684,14 @@ input UserUpdateWithoutTweetsDataInput {
   password: String
   followers: UserUpdatefollowersInput
   following: UserUpdatefollowingInput
+  likes: UserUpdatelikesInput
   permissions: UserUpdatepermissionsInput
+  comments: CommentUpdateManyWithoutUserInput
+}
+
+input UserUpsertWithoutCommentsInput {
+  update: UserUpdateWithoutCommentsDataInput!
+  create: UserCreateWithoutCommentsInput!
 }
 
 input UserUpsertWithoutTweetsInput {
@@ -1139,6 +1908,28 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   displayImg_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
   coverImg: String
 
   """All values that are not equal to given value."""
@@ -1263,6 +2054,9 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
   tweets_every: TweetWhereInput
   tweets_some: TweetWhereInput
   tweets_none: TweetWhereInput

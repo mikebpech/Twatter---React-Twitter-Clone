@@ -9,13 +9,16 @@ type User {
   handle: String! @unique
   email: String! @unique
   displayImg: String
+  createdAt: DateTime!
   coverImg: String
-  followers: [String!]
-  following: [String!]
+  followers: [ID!]
+  following: [ID!]
+  likes: [ID!]
   verified: Boolean!
   bio: String
   password: String!
   permissions: [Permission]
+  comments: [Comment!]! @relation(name: "UserComment")
   tweets: [Tweet!]! @relation(name: "TweetOfUser")
 }
 
@@ -24,8 +27,20 @@ type Tweet {
   message: String!
   image: String
   largeImage: String
+  comments: [Comment!]! @relation(name: "TweetComment")
   user: User! @relation(name: "TweetOfUser")
   hashtags: [String!]
+  updatedAt: DateTime!
+  createdAt: DateTime!
+}
+
+type Comment {
+  id: ID! @unique
+  message: String!
+  tweet: Tweet! @relation(name: "TweetComment")
+  user: User! @relation(name: "UserComment")
+  image: String
+  largeImage: String
   updatedAt: DateTime!
   createdAt: DateTime!
 }

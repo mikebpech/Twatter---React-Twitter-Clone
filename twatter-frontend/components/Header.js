@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import gql from "graphql-tag";
+import Link from "next/link";
 import { Mutation } from "react-apollo";
 import { Icon, Input, Button } from "antd";
 import User from "./User";
@@ -37,6 +38,18 @@ const HeaderButton = styled.div`
   align-items: center;
   justify-content: center;
   border-bottom: ${props => (props.selected ? "2px solid #1DA1F2" : "none")};
+
+  button {
+    box-shadow: none;
+    border: none;
+    margin-top: 0.5rem;
+
+    &:hover {
+      svg {
+        color: ${props => props.theme.blue};
+      }
+    }
+  }
 `;
 
 const Header = () => (
@@ -45,20 +58,30 @@ const Header = () => (
       <HeaderContainer>
         <HeaderInside>
           <HeaderButton selected>
-            <Icon
-              style={{ color: "#657786", fontSize: 24 }}
-              type="home"
-              theme="twoTone"
-            />
+            <Link href="/">
+              <Button shape="circle" size="large">
+                <Icon
+                  style={{ color: "#657786", fontSize: 24 }}
+                  type="home"
+                  theme="twoTone"
+                />
+              </Button>
+            </Link>
           </HeaderButton>
           <HeaderButton>
-            <Icon style={{ color: "#657786", fontSize: 24 }} type="search" />
+            <Button shape="circle" size="large">
+              <Icon style={{ color: "#657786", fontSize: 24 }} type="search" />
+            </Button>
           </HeaderButton>
           <HeaderButton>
-            <Icon style={{ color: "#657786", fontSize: 24 }} type="bell" />
+            <Button shape="circle" size="large">
+              <Icon style={{ color: "#657786", fontSize: 24 }} type="bell" />
+            </Button>
           </HeaderButton>
           <HeaderButton>
-            <Icon style={{ color: "#657786", fontSize: 24 }} type="mail" />
+            <Button shape="circle" size="large">
+              <Icon style={{ color: "#657786", fontSize: 24 }} type="mail" />
+            </Button>
           </HeaderButton>
           <Input
             placeholder="Search"

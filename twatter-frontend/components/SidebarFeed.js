@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import gql from "graphql-tag";
+import Link from "next/link";
 import { Query } from "react-apollo";
-import { Button, Icon, Avatar } from "antd";
+import { Button, Icon } from "antd";
+import FollowButton from "./FollowButton";
 
 const RANDOM_USERS_QUERY = gql`
   query RANDOM_USERS_QUERY($first: Int = 3) {
@@ -63,9 +65,17 @@ const Sidebar = styled.div`
       align-items: center;
       padding: 0 2rem;
       display: grid;
-      grid-template-columns: 50px 1fr 80px;
+      grid-template-columns: 50px 1fr auto;
 
-      h3 {
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: top;
+      }
+
+      a {
         font-size: 1.7rem;
         font-weight: 700;
       }
@@ -82,7 +92,7 @@ const Sidebar = styled.div`
   }
 `;
 
-const SidebarFeed = () => (
+const SidebarFeed = props => (
   <>
     <Query query={RANDOM_USERS_QUERY}>
       {({ data, error, loading }) => {
@@ -101,12 +111,21 @@ const SidebarFeed = () => (
               {data.users &&
                 data.users.map(user => (
                   <div key={user.id} className="item">
-                    <Avatar size="large" src={user.displayImg} />
+                    <img alt="userImg" src={user.displayImg} />
                     <div className="item-user">
-                      <h3>{user.name}</h3>
+                      <Link
+                        href={`/user?user=${user.handle}`}
+                        as={`/user/${user.handle}`}
+                      >
+                        <a>{user.name}</a>
+                      </Link>
                       <h4>@{user.handle}</h4>
                     </div>
-                    <Button type="primary">Follow</Button>
+                    <FollowButton
+                      loading1={loading}
+                      me={props.me}
+                      user={user}
+                    />
                   </div>
                 ))}
             </div>

@@ -1,5 +1,7 @@
-endpoint: https://us1.prisma.sh/michael-pechousek-bd4011/twatter-backend/dev
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://twatter-backend-e940444166.herokuapp.com/twatter-backend/prod
 datamodel: datamodel.graphql
+secret: ${env:PRISMA_SECRET}
 
 hooks:
   post-deploy:

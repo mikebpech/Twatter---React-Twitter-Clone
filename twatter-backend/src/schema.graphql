@@ -8,6 +8,7 @@ type User {
   displayImg: String
   coverImg: String
   followers: [String!]
+  createdAt: DateTime!
   following: [String!]
   verified: Boolean!
   bio: String
@@ -52,8 +53,12 @@ type Mutation {
     name: String
     handle: String
     displayImg: String
+    followers: [ID!]
+    following: [ID!]
     bio: String
   ): User!
   createTweet(message: String!, largeImage: String, hashtags: [String!]): Tweet!
   deleteTweet(id: ID!): Tweet!
+  followUser(id: ID!): User!
+  unfollowUser(id: ID!): User!
 }

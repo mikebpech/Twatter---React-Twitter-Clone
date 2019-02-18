@@ -1,47 +1,26 @@
+import gql from "graphql-tag";
 import styled from "styled-components";
 import { Query } from "react-apollo";
-import gql from "graphql-tag";
 import UserTweet from "./Tweet";
 
-const ALL_TWEETS_QUERY = gql`
-  query ALL_TWEETS_QUERY {
-    tweets(orderBy: createdAt_DESC, first: 15) {
-      id
+const GET_USER_TWEETS_QUERY = gql`
+  query GET_USER_TWEETS_QUERY($handle: String!) {
+    tweets(where: { user: { handle: $handle } }) {
       message
-      updatedAt
+      id
       image
-      largeImage
+      createdAt
       user {
         displayImg
         name
         handle
-        email
       }
     }
   }
 `;
 
-//for only followed users
-// query {
-//   tweets(
-//     where: {
-//       OR: [ (map through current user following)
-//         { user: { id: "cjs9a8vmu5njc0b09l4wljm6o" } }
-//         { user: { id: "cjs96wmdd53p60b09k595k1ab" } }
-//       ]
-//     }
-//   ) {
-//     id
-//     message
-//     user {
-//       handle
-//       id
-//     }
-//   }
-// }
-
 const Feed = styled.div`
-  max-height: calc(100vh - 170px);
+  max-height: 270px;
   overflow-y: auto;
 
   &::-webkit-scrollbar-track {
@@ -58,12 +37,9 @@ const Feed = styled.div`
   }
 `;
 
-const FeedTweets = props => (
-  <Query
-    // fetchPolicy="network-only"
-    query={ALL_TWEETS_QUERY}
-  >
-    {({ data, error, loading }) => (
+const UserTweets = props => (
+  <Query query={GET_USER_TWEETS_QUERY} variables={{ handle: props.handle }}>
+    {({ data }) => (
       <Feed>
         {data.tweets.map((tweet, i) => (
           <UserTweet
@@ -76,5 +52,5 @@ const FeedTweets = props => (
     )}
   </Query>
 );
-export default FeedTweets;
-export { ALL_TWEETS_QUERY };
+
+export default UserTweets;

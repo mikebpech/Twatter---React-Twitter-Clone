@@ -3,7 +3,7 @@ projects:
     schemaPath: "src/schema.graphql"
     extensions:
       endpoints:
-        default: "http://localhost:4444"
+        default: "https://twatter-backend-e940444166.herokuapp.com"
   prisma:
     schemaPath: "src/generated/prisma.graphql"
     extensions:

@@ -44,11 +44,12 @@ class CreateTweet extends Component {
       return message.error("Tweets cannot be longer than 150 chars.");
     }
     this.props.toggleCreateTweet();
-    const res = await createTweet().catch(err =>
-      message.error("Something went wrong!")
-    );
-    this.setState({ message: "" });
-    message.success("Tweeted successfully!");
+    const res = await createTweet()
+      .then(res => {
+        this.setState({ message: "" });
+        return message.success("Tweeted successfully!");
+      })
+      .catch(err => message.error("Something went wrong!"));
   };
 
   render() {

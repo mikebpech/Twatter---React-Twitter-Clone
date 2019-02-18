@@ -119,6 +119,75 @@ const Mutations = {
     }
 
     return ctx.db.mutation.deleteTweet({ where }, info);
+  },
+  async followUser(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in!");
+    }
+    const where = { id: args.id };
+
+    const user = await ctx.db.query.user({ where }, `{ followers }`);
+    const currentUser = await ctx.db.query.user(
+      { where: { id: ctx.request.userId } },
+      `{ following }`
+    );
+
+    if (!user || !currentUser) {
+      throw new Error("Something went wrong...");
+    }
+
+    const followers = [...user.followers, ctx.request.userId];
+    const following = [...currentUser.following, args.id];
+
+    const userUpdate = await ctx.db.mutation.updateUser(
+      { where, data: { followers: { set: followers } } },
+      info
+    );
+
+    const currentUserUpdate = await ctx.db.mutation.updateUser(
+      {
+        where: { id: ctx.request.userId },
+        data: { following: { set: following } }
+      },
+      info
+    );
+
+    return currentUser;
+  },
+  async unfollowUser(parent, args, ctx, info) {
+    if (!ctx.request.userId) {
+      throw new Error("You must be logged in!");
+    }
+    const where = { id: args.id };
+
+    const user = await ctx.db.query.user({ where }, `{ followers }`);
+    const currentUser = await ctx.db.query.user(
+      { where: { id: ctx.request.userId } },
+      `{ following }`
+    );
+
+    if (!user || !currentUser) {
+      throw new Error("Something went wrong...");
+    }
+
+    const followers = user.followers.filter(val => val !== ctx.request.userId);
+    const following = currentUser.following.filter(val => val !== args.id);
+    console.log(followers, following);
+
+    const userUpdate = await ctx.db.mutation.updateUser(
+      { where, data: { followers: { set: followers } } },
+      info
+    );
+
+    const currentUserUpdate = await ctx.db.mutation.updateUser(
+      {
+        where: { id: ctx.request.userId },
+        data: { following: { set: following } }
+      },
+      info
+    );
+
+    return currentUser;
   }
 };
 

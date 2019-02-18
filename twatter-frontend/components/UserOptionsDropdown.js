@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import Link from "next/link";
 import { Dropdown, Icon, Menu, Drawer, Avatar } from "antd";
 
 const AccountInfo = styled.div`
@@ -86,17 +87,27 @@ class UserOptionsDropdown extends Component {
             <h4>@{this.props.me.handle}</h4>
             <div className="stats">
               <div className="stat">
-                206 <span>following</span>
+                {this.props.me.following.length} <span>following</span>
               </div>
               <div className="stat">
-                394 <span>followers</span>
+                {this.props.me.followers.length}{" "}
+                <span>
+                  follower{this.props.me.followers.length === 0 ? "" : "s"}
+                </span>
               </div>
             </div>
           </AccountInfo>
           <Options>
             <Option>
-              <Icon style={{ marginRight: ".8rem" }} type="user" />
-              Profile
+              <Link
+                href={`/user?user=${this.props.me.handle}`}
+                as={`/user/${this.props.me.handle}`}
+              >
+                <a onClick={() => this.toggleDrawer()}>
+                  <Icon style={{ marginRight: ".8rem" }} type="user" />
+                  Profile
+                </a>
+              </Link>
             </Option>
             <Option>
               <Icon style={{ marginRight: ".8rem" }} type="form" />

@@ -1,14 +1,18 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import { format } from "date-fns";
 import gql from "graphql-tag";
 import { Query } from "react-apollo";
 import { HomeContainer } from "./index";
 import SidebarFeed from "../components/SidebarFeed";
-import { Button } from "antd";
+import { Button, Icon } from "antd";
+import UserTweets from "../components/UserTweets";
+import FollowButton from "../components/FollowButton";
 
 const USER_QUERY = gql`
   query USER_QUERY($handle: String!) {
     user(where: { handle: $handle }) {
+      id
       name
       handle
       displayImg
@@ -28,16 +32,16 @@ const USER_QUERY = gql`
 
 const Profile = styled.div`
   background: ${props => props.theme.white};
-  display: grid;
   grid-row: span 2;
-  grid-template-rows: 150px auto 1fr;
 
   .images {
     img {
       background-size: cover;
       position: relative;
+      object-fit: cover;
     }
     .displayImg {
+      object-fit: contain;
       width: 150px;
       height: 150px;
       position: absolute;
@@ -47,7 +51,8 @@ const Profile = styled.div`
       border-radius: 50%;
       overflow: hidden;
       img {
-        object-fit: cover;
+        height: 150px;
+        width: 150px;
         background-color: ${props => props.theme.darkgrey};
       }
     }
@@ -64,6 +69,7 @@ const UserActions = styled.div`
 
 const UserDetails = styled.div`
   padding: 1rem;
+  border-bottom: 1px solid ${props => props.theme.lightgrey2};
   h3 {
     font-weight: 700;
     margin: 0;
@@ -72,6 +78,34 @@ const UserDetails = styled.div`
   h4 {
     margin-top: 0.5rem;
     color: ${props => props.theme.darkgrey};
+  }
+  p {
+    margin-top: 1.5rem;
+    font-size: 1.7rem;
+  }
+
+  .information {
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    color: ${props => props.theme.lightgrey};
+
+    .follow {
+      color: ${props => props.theme.black};
+      margin-right: 1rem;
+      span {
+        margin-right: 0.2rem;
+        font-weight: 700;
+      }
+    }
+
+    svg {
+      margin-right: 0.5rem;
+    }
+
+    span {
+      margin-right: 1rem;
+    }
   }
 `;
 
@@ -89,9 +123,9 @@ class UserProfile extends Component {
           return (
             <HomeContainer>
               <Profile>
-                {console.log(me)}
                 <div className="images">
                   <img
+                    style={{ width: "600px", height: "150px" }}
                     src={
                       user.coverImg ||
                       "https://source.unsplash.com/random/600x150"
@@ -110,7 +144,7 @@ class UserProfile extends Component {
                     style={{ color: "#1890fe", border: "1px solid #1890fe" }}
                     size="large"
                     shape="circle"
-                    icon="tool"
+                    icon="setting"
                   />
                   <Button
                     style={{ color: "#1890fe", border: "1px solid #1890fe" }}
@@ -118,22 +152,32 @@ class UserProfile extends Component {
                     shape="circle"
                     icon="bell"
                   />
-                  {me && me.following.includes(user.handle) ? (
-                    <Button type="danger" size="large">
-                      Following
-                    </Button>
-                  ) : (
-                    <Button type="primary" size="large">
-                      Follow
-                    </Button>
-                  )}
+                  <FollowButton me={me} user={user} />
                 </UserActions>
                 <UserDetails>
                   <h3>{user.name}</h3>
                   <h4>@{user.handle}</h4>
+                  <p>{user.bio || "No bio has been set..."}</p>
+                  <div className="information">
+                    <div className="follow">
+                      <span>{user.followers.length}</span> follower
+                      {user.followers.length === 1 ? "" : "s"}
+                    </div>
+                    <div className="follow">
+                      <span>{user.following.length}</span> following
+                    </div>
+                    <Icon type="environment" />
+                    <span>Montreal, QC</span>
+                    <Icon type="calendar" />
+                    Joined{" "}
+                    {user.createdAt
+                      ? format(user.createdAt, "MMMM YYYY")
+                      : "January 2019"}
+                  </div>
                 </UserDetails>
+                <UserTweets handle={user.handle} />
               </Profile>
-              <SidebarFeed />
+              <SidebarFeed me={me} />
             </HomeContainer>
           );
         }}
